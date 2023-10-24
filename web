@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Access Web App</title>
+    <style>
+        #video {
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Camera Access Web App</h1>
+    <video id="video" autoplay></video>
+    <button id="startButton">Start Camera</button>
+    <script>
+        // Function to start the camera
+        document.getElementById('startButton').addEventListener('click', function () {
+            startCamera();
+        });
+
+        // Function to access the camera
+        function startCamera() {
+            const videoElement = document.getElementById('video');
+
+            // Check for camera support
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert('getUserMedia is not supported in your browser');
+                return;
+            }
+
+            // Request access to the user's camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    videoElement.srcObject = stream;
+                })
+                .catch(function (err) {
+                    console.error('Error accessing the camera: ' + err.name);
+                });
+        }
+    </script>
+</body>
+</html>
